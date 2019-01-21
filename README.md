@@ -1,4 +1,4 @@
-# Spam Email Classification using Gradient Boosting Machines (GBMs)
+# Spam Email Classification using Gradient Boosting Machines
 
 <img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75>
 
@@ -14,11 +14,11 @@ Emails from the [Fraudulent Email Corpus](https://www.kaggle.com/rtatman/fraudul
 
 <img src="images/spam.png" width=600>
 
-The modeling appraoch is as follows
+The modeling approach is as follows
 * Data is cleaned and processed using typical methods to clean text data (see notebook).
 * Feature engineering is performed using TF-IDF and SVD to compress email body text into 25 features.
-* AGBT model is used to fit the model.
-* AUC, Confusion Matrix, and Accuracy are all used to evaluate the model's performance.
+* Grandient Boosting Tree models are fit using sklearn and xgboost. 
+* AUC, Confusion Matrix, and Accuracy are all used to compare and evaluate the models.
 
 ## Boosting Machines
 Boosting Machines are an ensemble of weak learners. By combining multiple weak models, the result is an ensemble model that is quite effective, and does not overfit because all the models are weak.
