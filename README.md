@@ -2,7 +2,7 @@
 
 <img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75>
 
-Welcome! The tutorial provides an overview of Gradient Boosting Machines (GBMs) with an example of a spam email detection model using a Gradient Boosting Trees and real email dataset obtained from Kaggle. The model is trained to predict "Spam" (class 1) versus "Not Spam" (class 0). 
+Welcome! The tutorial provides an overview of Gradient Boosting Machines (GBMs) with an example of a spam email detection model using a Gradient Boosting Trees model and real email datasets obtained from Kaggle. The model is trained to predict "Spam" (class 1) versus "Not Spam" (class 0). 
 
 ## Modeling approach
 The data used to train this model contains conversational emails from the [Enron Emails Dataset](https://www.kaggle.com/wcukierski/enron-email-dataset). These emails are tagged as "Not Spam". 
