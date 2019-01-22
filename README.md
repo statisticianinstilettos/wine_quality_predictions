@@ -1,27 +1,24 @@
-# email_project
+# Spam Email Classification using Gradient Boosting Machines
 
-Gradient Boosting Machines (GBMs)
+<img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75>
 
-The purpose of this project is to provide an example/tutorial using Gradient Boosting Machines (GBMs). I created a spam email detection model using real datasets obtained from KAggle, and a Gradient Boosting Trees Model. The model is trained to predict "Spam" (class 1) versus "Not Spam" (class 0).
-
-Note: The purpose of this project is to apply Gradient Boosting Machines. The training data is not optimal for training a true spam detection system, because it is not a representative sample of emails. This model is extreemly accurate because the training data was from two different sources, and thus the model had little trouble distinguishing between the two types of emails. It was difficult to find example email data that was a representative sample of true emails.I would not expect this model to generalize well to emails in my inbox right, now however, this model could be retrained on a better dataset, and would generalize well.  
-
-<img src="https://media.giphy.com/media/YAnpMSHcurJVS/giphy.gif" width=400>
+Welcome! The tutorial provides an overview of Gradient Boosting Machines (GBMs) with an example of a spam email detection model using a Gradient Boosting Trees model and real email datasets obtained from Kaggle. The model is trained to predict "Spam" (class 1) versus "Not Spam" (class 0). 
 
 ## Modeling approach
-The data used to train this model contains conversational emails from the Enron dataset tagged as "Not Spam". https://www.kaggle.com/wcukierski/enron-email-dataset
-An example is shown here:
-example of class 0 email body
+The data used to train this model contains conversational emails from the [Enron Emails Dataset](https://www.kaggle.com/wcukierski/enron-email-dataset). These emails are tagged as "Not Spam". 
+
+<img src="images/not_spam.png" width=600>
 
 
-The data used to train this model also contains spam emails from the fradulent dataset tagged as "Spam". https://www.kaggle.com/rtatman/fraudulent-email-corpus
-An example is shown here:
-example of class 1 email body
+Emails from the [Fraudulent Email Corpus](https://www.kaggle.com/rtatman/fraudulent-email-corpus) are tagged as "Spam".
 
-* Data is cleaned and processed using typical methods to clean text data (see notebook)
-* Feature engineering using TF-IDF and SVD to compress email body text into 25 features
-* GBT model is used to fit the model
-* AUC, Confusion Matrix, and Accuracy are used to evaluate the models performance
+<img src="images/spam.png" width=600>
+
+The modeling approach is as follows
+* Data is cleaned and processed using typical methods to clean text data (see notebook).
+* Feature engineering is performed using TF-IDF and SVD to compress email body text into 25 features.
+* Grandient Boosting Tree models are fit using sklearn and xgboost. 
+* AUC, Confusion Matrix, and Accuracy are all used to compare and evaluate the models.
 
 ## Boosting Machines
 Boosting Machines are an ensemble of weak learners. By combining multiple weak models, the result is an ensemble model that is quite effective, and does not overfit because all the models are weak.
@@ -57,3 +54,9 @@ sklearn
 
 xgboost
 uses regularization
+
+
+
+
+
+<b>Note:</b> <i>The purpose of this project is simply to apply Gradient Boosting Machines to a real data example. The training data is not optimal for training a true spam detection system, because it is not a representative sample of emails. It was difficult to find example email data that was a representative sample of true emails, and as a result, I would not expect this model to generalize well to the emails in my inbox right now. However, this model could be retrained on a better dataset, and would generalize well. </i>
