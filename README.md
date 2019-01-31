@@ -1,6 +1,7 @@
-# Spam Email Classification using Gradient Boosting Machines
+# Wine Price Predictions using  Gradient Boosting Machines
 
-<img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75><img src="https://media.giphy.com/media/l0IylR4JqKHLjaP60/giphy.gif" width=75>
+<img src="https://media.giphy.com/media/u7TwrMijpvdp6/giphy.gif" width=400>
+
 
 Welcome! The tutorial provides an overview of Gradient Boosting Machines (GBMs) with an example of a spam email detection model using a Gradient Boosting Trees model and real email datasets obtained from Kaggle. The model is trained to predict "Spam" (class 1) versus "Not Spam" (class 0). 
 
@@ -55,8 +56,6 @@ sklearn
 xgboost
 uses regularization
 
+Drink up!
 
-
-
-
-<b>Note:</b> <i>The purpose of this project is simply to apply Gradient Boosting Machines to a real data example. The training data is not optimal for training a true spam detection system, because it is not a representative sample of emails. It was difficult to find example email data that was a representative sample of true emails, and as a result, I would not expect this model to generalize well to the emails in my inbox right now. However, this model could be retrained on a better dataset, and would generalize well. </i>
+<img src="https://media.giphy.com/media/E3L5goMMSoAAo/giphy.gif" width=200>
