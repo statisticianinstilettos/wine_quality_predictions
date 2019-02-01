@@ -13,11 +13,12 @@ The data used to train this model is from the [Wine Reviews Dataset](https://www
 The modeling approach is as follows
 * Features such as location, and winery are one-hot-encoded into categorical variables using pandas get_dummies function. 
 * Text data is cleaned and processed using typical methods to clean text data such as removing punctuation and converting text to lower-case.
-* Feature engineering is performed on the wine descriptions using TF-IDF and SVD to compress the body text into 25 latent features.
+* Feature engineering is performed on the wine descriptions using LSA (TF-IDF and SVD is used to compress the body text into 25 latent features).
 * A Grandient Boosting Regression Tree model is fit using xgboost. 
 * RMSE and MAE is used to evaluate the model.
 
 <img src="images/tree.png" width=600>
+The visualization of one of the weak learner trees in the xgboost model illustrates how the tree splits on the points, description, and country categorical features for the US and France. We can see that the points are very influential for predicting the wine price. The model also found something meaningful in one of the latent description topics from the LSA. We can also see that that wines from the US are cheaper, and wines from France are more expensive. Makes sense!
 
 ## Boosting Machines
 Boosting Machines are an ensemble of weak learners. By combining multiple weak models, the result is an ensemble model that is quite effective, and does not overfit because all the models are weak.
