@@ -3,23 +3,21 @@
 <img src="https://media.giphy.com/media/u7TwrMijpvdp6/giphy.gif" width=400>
 
 
-Welcome! The tutorial provides an overview of Gradient Boosting Machines (GBMs) with an example of a spam email detection model using a Gradient Boosting Trees model and real email datasets obtained from Kaggle. The model is trained to predict "Spam" (class 1) versus "Not Spam" (class 0). 
+Welcome! The tutorial provides an overview of Gradient Boosting Machines (GBMs) with an example of a wine price model using a Gradient Boosting Trees regression model and real data from Kaggle. The model is trained to predict the price of the wine using both unstructured text data, and structured features such as the region and points. 
 
 ## Modeling approach
-The data used to train this model contains conversational emails from the [Enron Emails Dataset](https://www.kaggle.com/wcukierski/enron-email-dataset). These emails are tagged as "Not Spam". 
+The data used to train this model is from the [Wine Reviews Dataset](https://www.kaggle.com/zynicide/wine-reviews), a 130k dataset of wine reviews with variety, location, winery, price, and description
 
-<img src="images/not_spam.png" width=600>
-
-
-Emails from the [Fraudulent Email Corpus](https://www.kaggle.com/rtatman/fraudulent-email-corpus) are tagged as "Spam".
-
-<img src="images/spam.png" width=600>
+<img src="images/wine_data.png" width=600>
 
 The modeling approach is as follows
-* Data is cleaned and processed using typical methods to clean text data (see notebook).
-* Feature engineering is performed using TF-IDF and SVD to compress email body text into 25 features.
-* Grandient Boosting Tree models are fit using sklearn and xgboost. 
-* AUC, Confusion Matrix, and Accuracy are all used to compare and evaluate the models.
+* Features such as location, and winery are one-hot-encoded into categorical variables using pandas get_dummies function. 
+* Text data is cleaned and processed using typical methods to clean text data such as removing punctuation and converting text to lower-case.
+* Feature engineering is performed on the wine descriptions using TF-IDF and SVD to compress the body text into 25 latent features.
+* A Grandient Boosting Regression Tree model is fit using xgboost. 
+* RMSE and MAE is used to evaluate the model.
+
+<img src="images/tree.png" width=600>
 
 ## Boosting Machines
 Boosting Machines are an ensemble of weak learners. By combining multiple weak models, the result is an ensemble model that is quite effective, and does not overfit because all the models are weak.
