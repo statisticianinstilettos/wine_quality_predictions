@@ -1,4 +1,6 @@
 from __future__ import print_function
+from sagemaker_containers.beta.framework import (
+    content_types, encoders, env, modules, transformer, worker)
 
 import subprocess
 import sys      
@@ -6,10 +8,11 @@ subprocess.call([sys.executable, '-m', 'pip', 'install', '-U', 'nltk'])
 subprocess.call([sys.executable, '-m', 'pip', 'install', '-U', 'xgboost']) 
 
 import os
-os.system('pip install -r requirements.txt')
+os.system('pip install -r ./requirements.txt')
 
 import argparse
 import os
+import json
 import pandas as pd
 import numpy as np
 from sklearn.externals import joblib
@@ -152,6 +155,12 @@ def model_fn(model_dir):
     bst = joblib.load(os.path.join(model_dir, "model.joblib"))
     return bst
 
+def input_fn(input_data):
+    """Parse input data payload
+    """
+    #TODO perform feature engineering on raw input data
+    return input_data 
+
 def predict_fn(input_data, model):
     """DIY predict method
     """
@@ -176,3 +185,8 @@ def predict_fn(input_data, model):
     output = {"price": "$"+str(prediction), "message":message}
     
     return output
+
+def output_fn(prediction):
+    """Format prediction output
+    """
+    return worker.Response(json.dumps(prediction), mimetype=accept)
