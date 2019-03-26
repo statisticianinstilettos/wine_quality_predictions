@@ -6,7 +6,7 @@ The purpose of this project is to provide an overview of Gradient Boosting Machi
 
 
 ## Modeling approach
-The model uses a Gradient Boosting Trees regression model and real data from Kaggle to predict the points of a bottle of wine (y). Points are on a scale of 0-100 and are categorized by Wine Spectator 
+The model uses a Gradient Boosting Trees regression and real data from Kaggle to predict the points of a bottle of wine (y). Points are on a scale of 0-100 and are categorized by Wine Spectator 
 * 95-100 Classic: a great wine
 * 90-94 Outstanding: a wine of superior character and style
 * 85-89 Very good: a wine with special qualities
