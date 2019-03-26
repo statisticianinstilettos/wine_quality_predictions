@@ -24,7 +24,7 @@ The modeling approach is as follows
 * RMSE and MAE is used to evaluate the model.
 
 <img src="images/weak_tree.png" width=600>
-The visualization of one of the weak learner trees in the xgboost model illustrates how the tree splits on the price and latent description. We can see that the price is very influential for predicting the wine quality points! The model also found something meaningful in one of the latent description topics from the LSA. 
+The visualization of one of the weak learner trees in the xgboost model illustrates how the tree splits on the price and latent description. We can see that the price is very influential for predicting the wine quality points! This weak learner also found something meaningful in one of the latent description topics from the LSA. 
 
 
 ## Boosting Machines
