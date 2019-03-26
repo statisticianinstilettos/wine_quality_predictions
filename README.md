@@ -1,4 +1,4 @@
-# Wine qaulity Predictions using Gradient Boosting Machines
+# Wine Quality Predictions using Gradient Boosting Machines
 
 <img src="https://media.giphy.com/media/u7TwrMijpvdp6/giphy.gif" width=400>
 
