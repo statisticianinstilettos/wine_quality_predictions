@@ -13,7 +13,7 @@ The model uses a Gradient Boosting Trees regression model and real data from Kag
 * 75-79 Mediocre: a drinkable wine that may have minor flaws
 * 50-74 Not recommended
 
-The features (X) used in this mode are the price of the wine bottle, and latent features obtained from the performing Latent Semantic Analysis (LSA) on unstructured text data of the descriptions. The data used to train this model can be found here: [Wine Reviews Dataset](https://www.kaggle.com/zynicide/wine-reviews), a 130k dataset of expert wine reviews with variety, location, winery, price, and descriptions.
+The features (X) used in this mode are the price of the wine bottle, and latent features obtained from the performing Latent Semantic Analysis (LSA) on the unstructured text data from the descriptions. The data used to train this model can be found here: [Wine Reviews Dataset](https://www.kaggle.com/zynicide/wine-reviews), a 130k dataset of expert wine reviews with variety, location, winery, price, and descriptions.
 
 <img src="images/wine_data.png" width=600>
 
