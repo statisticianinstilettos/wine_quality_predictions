@@ -1,8 +1,9 @@
 # Wine Quality Predictions using Gradient Boosting Machines
 
-<img src="https://media.giphy.com/media/u7TwrMijpvdp6/giphy.gif" width=400>
-
 The purpose of this project is to provide an overview of Gradient Boosting Machines (GBMs)s, and demonstrate model training and deployment with AWS SageMaker. 
+
+<img src="https://media.giphy.com/media/u7TwrMijpvdp6/giphy.gif" width=300>
+
 
 ## Modeling approach
 The model uses a Gradient Boosting Trees regression model and real data from Kaggle to predict the points of a bottle of wine (y). Points are on a scale of 0-100 and are categorized by Wine Spectator 
@@ -47,6 +48,6 @@ coming soon...
 
 Drink up!
 
-<img src="https://media.giphy.com/media/E3L5goMMSoAAo/giphy.gif" width=200>
+<img src="https://media.giphy.com/media/E3L5goMMSoAAo/giphy.gif" width=300>
 
 
