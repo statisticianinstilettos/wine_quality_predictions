@@ -30,7 +30,7 @@ The visualization of one of the weak learner trees in the xgboost model illustra
 ## Boosting Machines
 Boosting Machines are an ensemble of weak learners. By combining multiple weak models, the result is an ensemble model that is quite effective, and does not overfit because all the models are too weak to overfit. Gradient Boosting Machines can be used for Regression or Classification tasks. They are typically applied to tree based models, but could in theory be applied to any type of weak learner.
 
-comming soon... 
+coming soon... 
 
 ## Model Results
 
@@ -41,7 +41,7 @@ comming soon...
 
 ## Training and Deploying with SageMaker
 
-comming soon... 
+coming soon... 
 
 
 
