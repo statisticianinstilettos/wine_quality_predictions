@@ -7,9 +7,6 @@ import sys
 subprocess.call([sys.executable, '-m', 'pip', 'install', '-U', 'nltk']) 
 subprocess.call([sys.executable, '-m', 'pip', 'install', '-U', 'xgboost']) 
 
-import os
-os.system('pip install -r ./requirements.txt')
-
 import argparse
 import os
 import json
@@ -44,65 +41,7 @@ def remove_punctuation(text):
     text = " ".join(text)
     return text
 
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-
-    # Hyperparameters are described here. In this simple example we are just including one hyperparameter.
-    #parser.add_argument('--max_leaf_nodes', type=int, default=-1)
-
-    # Sagemaker specific arguments. Defaults are set in the environment variables.
-    parser.add_argument('--output-data-dir', type=str, default=os.environ['SM_OUTPUT_DATA_DIR'])
-    parser.add_argument('--model-dir', type=str, default=os.environ['SM_MODEL_DIR'])
-    parser.add_argument('--train', type=str, default=os.environ['SM_CHANNEL_TRAIN'])
-
-    args = parser.parse_args()
-
-    # Load Data
-    print("Loading wine data")
-    wine = pd.read_csv( os.path.join(args.train, "winemag-data_first150k.csv"), index_col=0, encoding="utf-8")
-    wine.dropna(subset=["price"], inplace=True)
-    wine.reset_index(inplace=True, drop=True)
-    
-    # Feature Engineering
-    
-    ## Make categorical features
-    print("Making categorical features")
-    country = pd.get_dummies(wine.country)
-    collist = country.columns.tolist()
-    collist = ["country_" + s for s in collist]
-    country.columns = collist
-    print ("There are {} country categorical variables".format(country.shape[1]))
-
-    designation = ohe_features(wine, "designation", 50)
-    collist = designation.columns.tolist()
-    collist = ["designation_" + s for s in collist]
-    designation.columns = collist
-    print ("There are {} designation categorical variables".format(designation.shape[1]))
-
-    province = ohe_features(wine, "province", 50)
-    collist = province.columns.tolist()
-    collist = ["province_" + s for s in collist]
-    province.columns = collist
-    print ("There are {} province categorical variables".format(province.shape[1]))
-
-    region = ohe_features(wine, "region_1", 50)
-    collist = region.columns.tolist()
-    collist = ["region_" + s for s in collist]
-    region.columns = collist
-    print ("There are {} region categorical variables".format(region.shape[1]))
-
-    variety = ohe_features(wine, "variety", 50)
-    collist = variety.columns.tolist()
-    collist = ["variety_" + s for s in collist]
-    variety.columns = collist
-    print ("There are {} variety categorical variables".format(variety.shape[1]))
-
-    winery = ohe_features(wine, "winery", 50)
-    collist = winery.columns.tolist()
-    collist = ["winery_" + s for s in collist]
-    winery.columns = collist
-    print ("There are {} winery categorical variables".format(winery.shape[1]))
+def feature_engineering(wine):
     
     ## Clean strings
     print("Cleaning document strings")
@@ -116,6 +55,7 @@ if __name__ == '__main__':
                      min_df=10,
                      ngram_range=(1, 2),
                      stop_words='english')
+    
     svd = TruncatedSVD(n_components=5)
 
     tfidf_matrix = tf.fit_transform(wine.description)
@@ -125,15 +65,45 @@ if __name__ == '__main__':
     lsa_features.columns = collist
     
     ## Make feature matrix
-    X = pd.concat([country, designation, region, variety, winery, lsa_features, wine["price"]], axis=1)
-    y = wine["points"]
+    X = pd.concat([lsa_features, wine["price"]], axis=1)
     
-    # Train Model
-    ## Format data for xgboost
+    ## save TF-IDF and SVD models
+    joblib.dump(tf, os.path.join(args.model_dir, "tfidf.joblib"))
+    print("TFIDF processor trained and saved!".format(os.path.join(args.model_dir, "tfidf.joblib")))
+    
+    joblib.dump(svd, os.path.join(args.model_dir, "svd.joblib"))
+    print("SVD processor trained and saved!".format(os.path.join(args.model_dir, "svd.joblib")))
+    
+    return X
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+
+    #parse environment variables.
+    parser.add_argument('--output-data-dir', type=str, default=os.environ['SM_OUTPUT_DATA_DIR'])
+    parser.add_argument('--model-dir', type=str, default=os.environ['SM_MODEL_DIR'])
+    parser.add_argument('--train', type=str, default=os.environ['SM_CHANNEL_TRAIN'])
+    args = parser.parse_args()
+
+    #Load Data
+    print("Loading wine data")
+    wine = pd.read_csv( os.path.join(args.train, "winemag-data_first150k.csv"), index_col=0, encoding="utf-8")
+    wine.dropna(subset=["price"], inplace=True)
+    wine.reset_index(inplace=True, drop=True)
+    
+    ### Feature Engineering ###
+    X = feature_engineering(wine)
+    y = wine["points"]
+    print(X.head(2))
+    
+    ### Train Model ###
+    
+    #Format data for xgboost
     print("Training xgboost model!")
     dtrain = xgb.DMatrix(X, label=y)
     
-    ## set hyperparameters
+    #Set hyperparameters
     param = {'max_depth': 3, 'eta': 1, 'subsample':0.5, 'alpha':1}
     param['nthread'] = 4
     param['eval_metric'] = 'mae'
@@ -142,51 +112,102 @@ if __name__ == '__main__':
     evallist = [(dtrain, 'train')]
     num_round = 10
     
-    ## Train xgboost model
+    #Train xgboost model
     bst = xgb.train(param, dtrain, num_round, evallist, early_stopping_rounds=10)
     
-    ## Save model
+    #Save model
     joblib.dump(bst, os.path.join(args.model_dir, "model.joblib"))
-    print("Model trained and saved!")
+    print("Model trained and saved!".format(os.path.join(args.model_dir, "model.joblib")))
 
+    
+#Model Loading
 def model_fn(model_dir):
     """Deserialized and return fitted model
     """
     bst = joblib.load(os.path.join(model_dir, "model.joblib"))
     return bst
 
-def input_fn(input_data):
-    """Parse input data payload
-    """
-    #TODO perform feature engineering on raw input data
-    return input_data 
 
-def predict_fn(input_data, model):
+#Deserialize the Invoke request body into an object we can perform prediction on
+def input_fn(request_body, content_type):
+    """Parse input data payload and return object to make predictions on.
+    """
+    
+    #TODO see if this can be a class var and inherit it from training class.
+    model_dir = "/opt/ml/model"
+    
+    if content_type == "application/json":
+        
+        #TODO should not have to load these into memmory every time you make a call to the endpoint.
+        #load tfidf and svd processors
+        tf = joblib.load(os.path.join(model_dir, "tfidf.joblib"))
+        svd = joblib.load(os.path.join(model_dir, "svd.joblib"))
+        
+        #transform input into features
+        one_wine = json.loads(request_body)
+        #should be a dataframe with 'description' and 'price'
+        one_wine = pd.DataFrame(one_wine, index=[0])
+        
+        #clean strings
+        one_wine["description"] = one_wine["description"].str.replace('\d+', '')
+        one_wine["description"] = one_wine.description.apply(func=remove_punctuation)
+        one_wine["description"] = one_wine.description.apply(func=make_lower_case)
+    
+        #transform features using LSA
+        tfidf_x = tf.transform(one_wine.description)
+        lsa_x = pd.DataFrame(svd.transform(tfidf_x))
+        collist = map(str, range(0, 5))
+        collist = ["latent_description_" + s for s in collist]
+        lsa_x.columns = collist
+        x = pd.concat([lsa_x, one_wine["price"]], axis=1)
+        
+        return x
+    
+    else:
+        raise ValueError("{} not supported by script!".format(content_type))
+
+
+#Perform prediction on the deserialized object, with the loaded model
+def predict_fn(input_object, model):
     """DIY predict method
     """
-    message_cheap = "Wow, what a steal!"
-    message_expensive = "Yikes, that is a spendy wine!"
-
-    #format payload as a dataframe
-    x = pd.DataFrame(input_data, index=[0])
-    #convert it to xgboost data object
-    x = xgb.DMatrix(x, label=y_test)
+    
+    #convert input to xgboost data object
+    x = xgb.DMatrix(input_object)
 
     #predict wine price from xgboost model
-    prediction = bst.predict(x, ntree_limit=bst.best_ntree_limit)
-    prediction = np.round(prediction,2)[0]
+    prediction = model.predict(x, ntree_limit=model.best_ntree_limit)
+    prediction = np.round(prediction,0)[0]
  
     #personalise message 
-    if prediction < 50:
-        message = message_cheap
-    else:
-        message = message_expensive
+    if prediction <= 74:
+        message = "Not recommended."
         
-    output = {"price": "$"+str(prediction), "message":message}
+    if (prediction >= 75) and (prediction <= 79): 
+        message = "Mediocre: a drinkable wine that may have minor flaws."
+        
+    if (prediction >= 80) and (prediction <= 84): 
+        message = "Good: a solid, well-made wine."
+        
+    if (prediction >= 85) and (prediction <= 89): 
+        message = "Very good: a wine with special qualities."
+        
+    if (prediction >= 90) and (prediction <= 94): 
+        message = "Outstanding: a wine of superior character and style."
+        
+    if prediction >= 95:
+        message = "Classic: a great wine."
+        
+    output = {"predicted_points": str(prediction), "message": message}
     
     return output
 
-def output_fn(prediction):
+
+#Serialize the prediction result into the desired response content type
+def output_fn(prediction, accept):
     """Format prediction output
     """
-    return worker.Response(json.dumps(prediction), mimetype=accept)
+    if accept == "application/json":
+        return worker.Response(json.dumps(prediction), mimetype=accept)
+    else:
+        raise RuntimeException("{} content_type is not supported by this script.".format(accept))
