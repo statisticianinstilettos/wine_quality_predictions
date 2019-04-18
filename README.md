@@ -1,6 +1,6 @@
 # Wine Quality Predictions using Gradient Boosting Machines
 
-The model uses a Gradient Boosting Trees regression and real data from Kaggle to predict the points of a bottle of wine (y). 
+The model uses a Gradient Boosting Trees regression and real data from Kaggle to predict the quality points of a bottle of wine. 
 
 Tutorial on training the GBM model: link coming soon
 
