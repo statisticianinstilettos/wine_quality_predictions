@@ -4,7 +4,6 @@ The model uses a Gradient Boosting Trees Regression and real data from Kaggle to
 
 Tutorial on training the GBM model: link coming soon
 
-Tutorial on deploying the model with AWS SageMaker: link coming soon
 
 <img src="images/weak_tree.png" width=800>
 
