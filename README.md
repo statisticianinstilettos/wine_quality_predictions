@@ -2,7 +2,7 @@
 
 The model uses a Gradient Boosting Trees Regression and real data from Kaggle to predict the quality points of a bottle of wine. 
 
-Tutorial on training the GBM model: link coming soon
+Tutorial on training the GBM model: https://towardsdatascience.com/predicting-wine-quality-with-gradient-boosting-machines-a-gmb-tutorial-d950b1542065
 
 
 <img src="images/weak_tree.png" width=800>
